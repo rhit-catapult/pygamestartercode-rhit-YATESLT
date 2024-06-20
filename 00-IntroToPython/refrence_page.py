@@ -61,3 +61,12 @@
 # if event.type == pygame.MOUSEBUTTONDOWN:
 #     sound1.play()
 
+# ################################
+# #Background Music
+# ################################
+# pygame.mixer.music.load("drums.wav")
+# load the background music into the pygame ^^^^
+#pygame.mixer.music.play(-1)
+#pass the number of times you want to loop, -1 for infinate loop, dont pass anything to play 1 time
+#pygame.mixer.music.pause() to pause the music
+#pygame.mixer.music.stop() to stop the music
