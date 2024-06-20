@@ -45,6 +45,10 @@ def main():
     # API --> pygame.draw.circle(screen, color, (x, y), radius, thickness)
 
 
+        if pygame.mouse.get_pos()[0]>240:
+            pos = return_pupil_pos(400,160, 7, pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],25)
+        else:
+            pos = return_pupil_pos(240,160, 7, pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],25)
 
         pygame.draw.circle(screen, (255, 255, 0), (320, 240), 210)  # yellow circle
         pygame.draw.circle(screen, (0, 0, 0), (320, 240), 210, 4)  # black outline
@@ -53,9 +57,13 @@ def main():
         pygame.draw.circle(screen, (0, 0, 0), (240, 160), 25, 3)  # black outline
         pygame.draw.circle(screen, (0, 0, 0), return_pupil_pos(240,160, 7, pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],25), 7)  # black pupil
 
+
         pygame.draw.circle(screen, (225, 225, 225), (400, 160), 25)  # white eye
         pygame.draw.circle(screen, (0, 0, 0), (400, 160), 25, 3)  # black outline
-        pygame.draw.circle(screen, (0, 0, 0), (398+eye_delta_x,162+eye_delta_y), 7)  # black pupil
+        if pygame.mouse.get_pos()[0]>240:
+            pygame.draw.circle(screen, (0, 0, 0), (pos[0],pos[1]), 7)  # black pupil
+        else:
+            pygame.draw.circle(screen, (0, 0, 0), (pos[0]+160,pos[1]), 7)
 
         # TODO 1: Draw a nose
         # Suggestion: color (80,0,0) location (320,245), radius 10
@@ -71,8 +79,10 @@ def main():
 def return_pupil_pos(xEye, yEye, rPup, xMouse, yMouse, rEye):
     radius = rEye - rPup
 
-    xPup = xEye + (radius((xMouse-xEye)/math.sqrt((xMouse-xEye)**2+(yMouse-yEye)**2)))
-    yPup = yEye + (radius((yMouse-yEye)/math.sqrt((xMouse-xEye)**2+(yMouse-yEye)**2)))
+    xPup = xEye + (radius*((xMouse-xEye)/math.sqrt((xMouse-xEye)**2+(yMouse-yEye)**2)))
+    yPup = yEye + (radius*((yMouse-yEye)/math.sqrt((xMouse-xEye)**2+(yMouse-yEye)**2)))
+    xPup = int(xPup)
+    yPup = int(yPup)
     giveBack = (xPup, yPup)
     print(giveBack)
     return giveBack
