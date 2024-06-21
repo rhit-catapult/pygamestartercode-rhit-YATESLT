@@ -1,0 +1,10 @@
+## Guitar hero kinda game, generrate random block object and have them come towards the user and have the user have to click a designatedkey on the keyboard when the block gets to the right area,
+
+## Fruit drop game, like hyel
+
+## Fishing game, casting a reeling mechanics, different types of fish, varrying difficutly and varrying score, could me more arcade / 2D style.
+
+## Top down shooter game, kinda like that one tank game.
+
+## Mini golf game, top down 2D game mini golf clone, might be hard **
+

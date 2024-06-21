@@ -35,7 +35,7 @@ class Ball:
             #Look at distnace between centers of balls, look to see if the distances is less than 1 of the 2 radiuses.
             distance = math.sqrt((self.x - ball.x)**2 + (self.y - ball.y)**2)
             # print(distance)
-            if distance < (self.radius*2)+4:
+            if distance < (self.radius*2)+5: #change the end number being added if more balls are being added => less chance for glitchy weird balls, i had it set to 5 for like 4 balls.
                 self.speed_x *= -1
                 self.speed_y *= -1
 
@@ -54,7 +54,7 @@ def main():
 
     ball = Ball(screen, (255,0,0), 500,400, 30, 10,10)
 
-    for i in range(5):
+    for i in range(4): #red ball will always spawn, so change this number to be 1- the total # of balls you want, ex: 4 will spawn 5 balls
         balls.append(Ball(screen, (random.randint(100,255),random.randint(100,255),random.randint(100,255)), random.randint(100,800),random.randint(100,700), 30, random.randint(3,11),random.randint(3,11)))
 
     balls.append(ball)
