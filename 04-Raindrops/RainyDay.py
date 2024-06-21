@@ -26,7 +26,7 @@ class Raindrop:
 
     def draw(self):
         """ Draws this sprite onto the screen. """
-        pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y), (self.x, self.y+5), 2)
+        pygame.draw.line(self.screen, (51,200,255), (self.x, self.y), (self.x, self.y+5), 2)
 
         # TODO 9: Draw a vertical line that is 5 pixels long, 2 pixels thick,
         #      from the current position of this Raindrop (use either a black or blue color).
