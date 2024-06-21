@@ -34,7 +34,7 @@ class Ball:
                 continue
             #Look at distnace between centers of balls, look to see if the distances is less than 1 of the 2 radiuses.
             distance = math.sqrt((self.x - ball.x)**2 + (self.y - ball.y)**2)
-            print(distance)
+            # print(distance)
             if distance < (self.radius*2)+4:
                 self.speed_x *= -1
                 self.speed_y *= -1
@@ -51,12 +51,15 @@ def main():
     screen.fill(pygame.Color('gray'))
     clock = pygame.time.Clock()
     balls = []
+
     ball = Ball(screen, (255,0,0), 500,400, 30, 10,10)
-    ball2 = Ball(screen, (random.randint(100,255),random.randint(100,255),random.randint(100,255)), random.randint(100,800),random.randint(100,700), 30, random.randint(3,11),random.randint(3,11))
-    ball1 = Ball(screen, (random.randint(100,255),random.randint(100,255),random.randint(100,255)), random.randint(100,800),random.randint(100,700), 30, random.randint(3,11),random.randint(3,11))
+
+    for i in range(5):
+        balls.append(Ball(screen, (random.randint(100,255),random.randint(100,255),random.randint(100,255)), random.randint(100,800),random.randint(100,700), 30, random.randint(3,11),random.randint(3,11)))
+
     balls.append(ball)
-    balls.append(ball1)
-    balls.append(ball2)
+
+
     # TODO: Create an instance of the Ball class called ball1
 
     while True:
