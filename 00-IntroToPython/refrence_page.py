@@ -70,3 +70,37 @@
 #pass the number of times you want to loop, -1 for infinate loop, dont pass anything to play 1 time
 #pygame.mixer.music.pause() to pause the music
 #pygame.mixer.music.stop() to stop the music
+
+# ################################
+# #Mouse movement (Getting mouse position)
+# ################################
+# pygame.mouse.get_pos()
+# or
+# pygame.event.event_pos()   ??? <--- not sure if this works
+
+# ################################
+# #Object Oriented Programming
+# ################################
+# Objects know stuff (instance variables)
+# Objects can do stuff (methods
+# EXAMPLE:
+# class Hero:
+#     def __init__(self, screen, x, y, with_umbrella_filename, without_umbrella_filename):
+#         """ Creates a Hero sprite (Mike) that does not move. If hit by rain he'll put up his umbrella. """
+#         self.screen = screen
+#         self.x = x
+#         self.y = y
+#         self.image_umbrella = pygame.image.load(with_umbrella_filename)
+#         self.image_no_umbrella = pygame.image.load(without_umbrella_filename)
+#         self.last_hit_time = 0
+# This is a class, with a constructor (__init__)
+# self represents local variables that are inside the "factory"
+# Method example:
+# def hit_by(self, raindrop)
+#     """ Returns true if the given raindrop is hitting this Hero, otherwise false. """
+#     hero_hit_box = pygame.Rect(self.x, self.y, self.image_no_umbrella.get_width(),self.image_no_umbrella.get_height())
+#
+#     return hero_hit_box.collidepoint(raindrop.x, raindrop.y)
+
+
+

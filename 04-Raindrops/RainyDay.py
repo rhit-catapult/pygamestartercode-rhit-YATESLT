@@ -11,13 +11,12 @@ class Raindrop:
         self.screen = screen
         self.x = x
         self.y = y
-        self.speed = random.randint(5,15)
+        self.speed = random.randint(5, 15)
 
     def move(self):
         """ Move the self.y value of the Raindrop down the screen (y increase) at the self.speed. """
         # TODO 11: Change the  y  position of this Raindrop by its speed.
         self.y += self.speed
-
 
     def off_screen(self):
         """ Returns true if the Raindrop y value is not shown on the screen, otherwise false. """
@@ -31,7 +30,6 @@ class Raindrop:
 
         # TODO 9: Draw a vertical line that is 5 pixels long, 2 pixels thick,
         #      from the current position of this Raindrop (use either a black or blue color).
-
 
 
 class Hero:
@@ -60,7 +58,11 @@ class Hero:
         #     If the current time is greater than this Hero's last_hit_time + 1,
         #       draw this Hero WITHOUT an umbrella,
         #       otherwise draw this Hero WITH an umbrella.
-        self.screen.blit(self.image_no_umbrella, (self.x, self.y))
+        if time.time() - self.last_hit_time > 1.0:
+
+            self.screen.blit(self.image_no_umbrella, (self.x, self.y))
+        else:
+            self.screen.blit(self.image_umbrella, (self.x, self.y))
 
     def hit_by(self, raindrop):
         """ Returns true if the given raindrop is hitting this Hero, otherwise false. """
@@ -70,6 +72,7 @@ class Hero:
 
 
         # TODO 19: Return True if this Hero is currently colliding with the given Raindrop.
+
 
 class Cloud:
     def __init__(self, screen, x, y, image_filename):
@@ -81,12 +84,19 @@ class Cloud:
         #     - Create a list for Raindrop objects as an empty list called raindrops.
         #   Use instance variables:
         #      screen  x  y  image   raindrops.
-        pass
+        self.screen = screen
+        self.x = x
+        self.y = y
+        self.image = pygame.image.load(image_filename)
+        self.raindrops = []
 
     def draw(self):
         """ Draws this sprite onto the screen. """
         # TODO 25: Draw (blit) this Cloud's image at its current position.
-        pass
+        self.screen.blit(self.image, (self.x, self.y))
+        for raindrop in self.raindrops:
+            raindrop.draw()
+            raindrop.move()
 
     def rain(self):
         """ Adds a Raindrop to the array of raindrops so that it looks like the Cloud is raining. """
@@ -94,7 +104,7 @@ class Cloud:
         #     where the new Raindrop starts at:
         #       - x is a random integer between this Cloud's x and this Cloud's x + 300.
         #       - y is this Cloud's y + 100.
-        pass
+        self.raindrops.append(Raindrop(self.screen, random.randint(self.x,self.x+300), self.y+100))
 
 
 def main():
@@ -119,6 +129,7 @@ def main():
     # TODO 15: Make a Hero, named mike, with appropriate images, starting at position x=200 y=400.
     # TODO 15: Make a Hero, named alyssa, with appropriate images, starting at position x=700 y=400.
     # TODO 23: Make a Cloud, named cloud, with appropriate images, starting at position x=300 y=50.
+    cloud = Cloud(screen, 500,300, "another_cloud.png")
 
     # TODO 3: Enter the game loop, with a clock tick of 60 (or so) at each iteration.
     while True:
@@ -130,6 +141,15 @@ def main():
 
         screen.fill(pygame.Color("White"))
 
+
+        if(pygame.key.get_pressed()[pygame.K_RIGHT]) or pygame.key.get_pressed()[pygame.K_d]:
+            cloud.x += 5
+        if(pygame.key.get_pressed()[pygame.K_LEFT]) or pygame.key.get_pressed()[pygame.K_a]:
+            cloud.x -= 5
+        if(pygame.key.get_pressed()[pygame.K_UP]) or pygame.key.get_pressed()[pygame.K_w]:
+            cloud.y -= 5
+        if(pygame.key.get_pressed()[pygame.K_DOWN]) or pygame.key.get_pressed()[pygame.K_s]:
+            cloud.y += 5
 
         # TODO 27: Inside the game loop (AFTER the events loop above), get the list of keys that are currently pressed.
         #     Arrange so that the Cloud moves:
@@ -154,14 +174,17 @@ def main():
 
 
         # TODO 20: As a temporary test, check if test_drop is hitting Mike (or Alyssa), if so set their last_hit_time
-        if mike.hit_by(test_drop):
-            test_drop.x = 750
-            test_drop.y = 10
-            mike.last_hit_time = 0
-        if alyssa.hit_by(test_drop):
-            test_drop.x = 250
-            test_drop.y = 10
-            alyssa.last_hit_time = 0
+
+
+        for raindrop in cloud.raindrops:
+            if alyssa.hit_by(raindrop):
+                alyssa.last_hit_time = time.time()
+                cloud.raindrops.remove(raindrop)
+            if mike.hit_by(raindrop):
+                mike.last_hit_time = time.time()
+                cloud.raindrops.remove(raindrop)
+            if raindrop.off_screen():
+                cloud.raindrops.remove(raindrop)
 
         # TODO 22: Remove the code that reset the y of the test_drop when off_screen()
         #          Instead reset the test_drop y to 10 when mike is hit, additionally set the x to 750
@@ -172,15 +195,20 @@ def main():
 
         # TODO 29: Remove the temporary testdrop code from this function and refactor it as follows:
         # TODO: Make the Cloud "rain", then:
-        # TODO    For each Raindrop in the Cloud's list of raindrops:
+        #         # TODO    For each Raindrop in the Cloud's list of raindrops:
             #       - move the Raindrop.
             #       - draw the Raindrop.
             # TODO  30: if the Hero (Mike or Alyssa) is hit by a Raindrop, set the Hero's last_time_hit to the current time.
             # Optional  - if the Raindrop is off the screen or hitting a Hero, remove it from the Cloud's list of raindrops.
 
         # TODO 18: Draw the Heroes (Mike and Alyssa)
+        cloud.draw()
+        cloud.rain()
         mike.draw()
         alyssa.draw()
+
+
+
         # TODO 6: Update the display and remove the pass statement below
         pygame.display.update()
 
